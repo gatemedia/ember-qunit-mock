@@ -1,4 +1,4 @@
-# Ember-qunit-mock
+# ember-qunit-mock
 
 [![Build Status](https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master)](https://travis-ci.org/gatemedia/ember-qunit-mock)
 
