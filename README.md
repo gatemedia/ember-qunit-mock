@@ -1,6 +1,6 @@
 # Ember-qunit-mock
 
-https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master
+[![Build Status](https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master)](https://travis-ci.org/gatemedia/ember-qunit-mock)
 
 ## Installation
 
