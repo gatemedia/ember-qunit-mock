@@ -1,7 +1,8 @@
 {
   "name": "ember-qunit-mock",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The default blueprint for ember-cli addons.",
+  "repository": "https://github.com/gatemedia/ember-qunit-mock",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,11 +12,10 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Mike Aski",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
