@@ -1,6 +1,6 @@
 # Ember-qunit-mock
 
-This README outlines the details of collaborating on this Ember addon.
+https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master
 
 ## Installation
 
