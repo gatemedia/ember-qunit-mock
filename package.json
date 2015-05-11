@@ -1,7 +1,7 @@
 {
   "name": "ember-qunit-mock",
-  "version": "0.0.1",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.2",
+  "description": "Basic mocking tools with smooth integration in ember-qunit tests.",
   "author": "Mike Aski <mike.aski@gmail.com>",
   "repository": {
     "type": "git",
