@@ -1,5 +1,6 @@
 # ember-qunit-mock
 
+[![NPM Version](https://img.shields.io/npm/v/ember-qunit-mock.svg?style=flat)](https://www.npmjs.org/package/ember-qunit-mock)
 [![Build Status](https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master)](https://travis-ci.org/gatemedia/ember-qunit-mock)
 
 This project is heavily inspired by [SinonJS](http://sinonjs.org/docs), but aims to providing assertions-friendly mocks in an [ember-qunit](https://github.com/rwjblue/ember-qunit) testing environment.
