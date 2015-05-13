@@ -2,6 +2,7 @@ import Ember from 'ember';
 import CallExpectation from './call-expectation';
 
 export default Ember.Object.extend({
+  name: '',
   calls: null,
   expectations: null,
 
@@ -34,9 +35,15 @@ export default Ember.Object.extend({
 
   validate: function (assert) {
     var expectations = this.get('expectations'),
-        calls = this.get('calls');
+        calls = this.get('calls'),
+        name = this.get('name');
 
-    assert.equal(expectations.get('length'), calls.get('length'), Ember.String.fmt('Expected %@ calls', expectations.get('length')));
+    assert.equal(expectations.get('length'), calls.get('length'),
+      Ember.String.fmt('Mock <%@> expected %@ calls, got %@ [%@]',
+        Ember.isEmpty(name) ? 'anonymous' : name,
+        expectations.get('length'),
+        calls.get('length'),
+        calls.getEach('name').join(', ')));
     if (expectations.get('length') !== calls.get('length')) { return; } // for tests
 
     expectations.forEach(function (expectation, index) {

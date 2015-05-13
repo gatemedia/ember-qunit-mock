@@ -8,8 +8,10 @@ export function test (testName, callback, wrapped) {
     var context = getContext(),
         mocks = Ember.A();
 
-    context.mock = function () {
-      var mock = Mock.create();
+    context.mock = function (name) {
+      var mock = Mock.create({
+        name: name
+      });
       mocks.pushObject(mock);
       return mock;
     };

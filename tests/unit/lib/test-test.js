@@ -31,20 +31,20 @@ test('mocks are validated after test', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 0, 'Expected 1 calls']
+    ['equal', 1, 0, 'Mock <anonymous> expected 1 calls, got 0 []']
   ], 'Assertions are as expected');
 
 
   fakeAsserter = forgeAsserter();
   mockTest('dummy test', function () {
-    var mock = this.mock();
+    var mock = this.mock('MyMock');
 
     mock.expect('bim');
     mock.expect('bam');
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 2, 0, 'Expected 2 calls']
+    ['equal', 2, 0, 'Mock <MyMock> expected 2 calls, got 0 []']
   ], 'Assertions are as expected');
 });
 
@@ -54,14 +54,14 @@ test('mock validation check method name', function (assert) {
 
   var fakeAsserter = forgeAsserter();
   mockTest('dummy test', function () {
-    var mock = this.mock();
+    var mock = this.mock('MyMock');
 
     mock.expect('bam');
     mock.bam();
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 1, 'Expected 1 calls'],
+    ['equal', 1, 1, 'Mock <MyMock> expected 1 calls, got 1 [bam]'],
     ['equal', 'bam', 'bam', '[Call #1] Expected: "bam"']
   ], 'Assertions are as expected');
 });
@@ -79,7 +79,7 @@ test('mock validation check arguments', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 1, 'Expected 1 calls'],
+    ['equal', 1, 1, 'Mock <anonymous> expected 1 calls, got 1 [bam]'],
     ['equal', 'bam', 'bam', '[Call #1] Expected: "bam"'],
     ['deepEqual', 42, 36, '[Call #1] Expected: bam(42, ...)'],
     ['deepEqual', "hop", "paf", '[Call #1] Expected: bam(..., hop, ...)'],
