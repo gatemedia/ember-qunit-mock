@@ -1,32 +1,41 @@
 import Ember from 'ember';
 import CallExpectation from './call-expectation';
+import Calls from './calls';
 
 export default Ember.Object.extend({
   name: '',
   calls: null,
   expectations: null,
 
+  alias: Ember.computed('name', function () {
+    var name = this.get('name');
+    return Ember.String.fmt('<%@>', Ember.isEmpty(name) ? 'anonymous' : name);
+  }),
+
   init: function () {
     this.setProperties({
-      calls: Ember.A(),
-      expectations: Ember.A()
+      expectations: Ember.A(),
+      calls: Calls.create()
     });
   },
 
-  expect: function (name) {
+  expect: function (method) {
+    if (this[method]) {
+      throw new Error(Ember.String.fmt(
+        'Cannot define "%@.%@" more than once. Please use calls count constraint instead (once, twice, exactly, ...)',
+        this.get('alias'), method));
+    }
+
     var calls = this.get('calls'),
         expectations = this.get('expectations');
 
     var expectation = CallExpectation.create({
-      name: name
+      method: method
     });
     expectations.pushObject(expectation);
 
-    this[name] = function () {
-      calls.pushObject({
-        name: name,
-        args: Array.prototype.slice.call(arguments)
-      });
+    this[method] = function () {
+      calls.addCall(method, Array.prototype.slice.call(arguments));
       return expectation.get('returnValue');
     };
 
@@ -35,28 +44,11 @@ export default Ember.Object.extend({
 
   validate: function (assert) {
     var expectations = this.get('expectations'),
-        calls = this.get('calls'),
-        name = this.get('name');
+        alias = this.get('alias'),
+        calls = this.get('calls');
 
-    assert.equal(expectations.get('length'), calls.get('length'),
-      Ember.String.fmt('Mock <%@> expected %@ calls, got %@ [%@]',
-        Ember.isEmpty(name) ? 'anonymous' : name,
-        expectations.get('length'),
-        calls.get('length'),
-        calls.getEach('name').join(', ')));
-    if (expectations.get('length') !== calls.get('length')) { return; } // for tests
-
-    expectations.forEach(function (expectation, index) {
-      assert.equal(expectation.name, calls[index].name, Ember.String.fmt('[Call #%@] Expected: "%@"', index + 1, expectation.name));
-      if (expectation.args) {
-        var args = calls[index].args;
-        expectation.args.forEach(function (arg, i) {
-          var prefix = (i === 0 ? '' : '..., '),
-              suffix = (i === expectation.args.length - 1 ? '' : ', ...');
-          assert.deepEqual(arg, args[i],
-            Ember.String.fmt('[Call #%@] Expected: %@(%@%@%@)', index + 1, expectation.name, prefix, arg, suffix));
-        });
-      }
+    expectations.forEach(function (expectation) {
+      expectation.validate(alias, calls, assert);
     });
   },
 

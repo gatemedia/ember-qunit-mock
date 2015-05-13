@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import mockTest from 'ember-qunit-mock/lib/test';
 import { module, test } from 'qunit';
 import { setContext } from 'ember-test-helpers';
+import mockTest from 'ember-qunit-mock/lib/test';
 
 module('test');
 
@@ -31,7 +31,7 @@ test('mocks are validated after test', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 0, 'Mock <anonymous> expected 1 calls, got 0 []']
+    ['equal', 1, 0, 'Mock <anonymous> expected 1 call for "bam", got 0']
   ], 'Assertions are as expected');
 
 
@@ -44,7 +44,8 @@ test('mocks are validated after test', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 2, 0, 'Mock <MyMock> expected 2 calls, got 0 []']
+    ['equal', 1, 0, 'Mock <MyMock> expected 1 call for "bim", got 0'],
+    ['equal', 1, 0, 'Mock <MyMock> expected 1 call for "bam", got 0']
   ], 'Assertions are as expected');
 });
 
@@ -61,8 +62,7 @@ test('mock validation check method name', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 1, 'Mock <MyMock> expected 1 calls, got 1 [bam]'],
-    ['equal', 'bam', 'bam', '[Call #1] Expected: "bam"']
+    ['equal', 1, 1, 'Mock <MyMock> expected 1 call for "bam", got 1']
   ], 'Assertions are as expected');
 });
 
@@ -79,11 +79,10 @@ test('mock validation check arguments', function (assert) {
   }, forgeRunner(fakeAsserter));
 
   assert.deepEqual(fakeAsserter.calls, [
-    ['equal', 1, 1, 'Mock <anonymous> expected 1 calls, got 1 [bam]'],
-    ['equal', 'bam', 'bam', '[Call #1] Expected: "bam"'],
-    ['deepEqual', 42, 36, '[Call #1] Expected: bam(42, ...)'],
-    ['deepEqual', "hop", "paf", '[Call #1] Expected: bam(..., hop, ...)'],
-    ['deepEqual', {"k":"v"}, undefined, '[Call #1] Expected: bam(..., {k: v})']
+    ['equal', 1, 1, 'Mock <anonymous> expected 1 call for "bam", got 1'],
+    ['deepEqual', 42, 36, '[<anonymous>.bam - call #1] expected call(42, ...)'],
+    ['deepEqual', "hop", "paf", '[<anonymous>.bam - call #1] expected call(..., hop, ...)'],
+    ['deepEqual', {"k":"v"}, undefined, '[<anonymous>.bam - call #1] expected call(..., {k: v})']
   ], 'Assertions are as expected');
 });
 

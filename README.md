@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gatemedia/ember-qunit-mock.svg?branch=master)](https://travis-ci.org/gatemedia/ember-qunit-mock)
 
-This project aims at incrementaly reproduce [SinonJS](http://sinonjs.org/docs) behaviour, but assertions-friendly in an [ember-qunit](https://github.com/rwjblue/ember-qunit) test environment.
+This project is heavily inspired by [SinonJS](http://sinonjs.org/docs), but aims to providing assertions-friendly mocks in an [ember-qunit](https://github.com/rwjblue/ember-qunit) testing environment.
 
 # Use it!
 
