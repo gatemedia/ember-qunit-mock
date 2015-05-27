@@ -21,13 +21,16 @@ export default Ember.Object.extend({
   method: null,
   count: null,
   args: null,
-  value: null,
+  values: null,
+  _callIndex: null,
 
   init: function () {
     this._super();
     this.setProperties({
       count: 1,
-      args: Ember.A()
+      args: Ember.A(),
+      values: Ember.A(),
+      _callIndex: 0
     });
   },
 
@@ -48,12 +51,14 @@ export default Ember.Object.extend({
     return this;
   },
   returns: function (value) {
-    this.set('value', value);
+    this.get('values').pushObject(value);
     return this;
   },
 
   returnValue: Ember.computed('value', function () {
-    var value = this.get('value');
+    var values = this.get('values'),
+        callIndex = this.incrementProperty('_callIndex');
+    var value = callIndex <= values.get('length') ? values.objectAt(callIndex - 1) : values.get('lastObject');
 
     if (typeof value === 'function') {
       return value.call(this.get('args'));

@@ -1,6 +1,6 @@
 {
   "name": "ember-qunit-mock",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Basic mocking tools with smooth integration in ember-qunit tests.",
   "author": "Mike Aski <mike.aski@gmail.com>",
   "repository": {
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
-    "ember-cli": "0.2.3",
+    "ember-cli": "0.2.5",
     "ember-cli-app-version": "0.3.3",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "0.0.8",

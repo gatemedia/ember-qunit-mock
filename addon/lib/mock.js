@@ -16,13 +16,14 @@ export default Ember.Object.extend({
     this.setProperties({
       expectations: Ember.A(),
       calls: Calls.create(),
-      _original: {}
+      _original: {},
+      _stub: {}
     });
   },
 
   expect: function (method) {
-    var calls = this.get('calls'),
-        expectations = this.get('expectations');
+    var calls = this.calls,
+        expectations = this.expectations;
 
     if (expectations.findBy('method', method)) {
       throw new Error(Ember.String.fmt(
@@ -35,18 +36,23 @@ export default Ember.Object.extend({
     });
     expectations.pushObject(expectation);
 
+    function stub () {
+      calls.addCall(method, Array.prototype.slice.call(arguments));
+      return expectation.get('returnValue');
+    }
+
     if (this[method]) {
       this._original[method] = this[method];
     }
-    this[method] = function () {
-      calls.addCall(method, Array.prototype.slice.call(arguments));
-      return expectation.get('returnValue');
-    };
+    this._stub[method] = stub;
+    this[method] = stub;
 
     return expectation;
   },
 
   validate: function (assert) {
+    this._restoreOriginals();
+
     var expectations = this.get('expectations'),
         alias = this.get('alias'),
         calls = this.get('calls');
@@ -54,6 +60,12 @@ export default Ember.Object.extend({
     expectations.forEach(function (expectation) {
       expectation.validate(alias, calls, assert);
     });
+  },
+
+  _restoreOriginals: function () {
+    Ember.keys(this._original).forEach(function (method) {
+      this[method] = this._original[method];
+    }, this);
   },
 
   toString: function () {
