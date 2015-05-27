@@ -15,25 +15,29 @@ export default Ember.Object.extend({
   init: function () {
     this.setProperties({
       expectations: Ember.A(),
-      calls: Calls.create()
+      calls: Calls.create(),
+      _original: {}
     });
   },
 
   expect: function (method) {
-    if (this[method]) {
+    var calls = this.get('calls'),
+        expectations = this.get('expectations');
+
+    if (expectations.findBy('method', method)) {
       throw new Error(Ember.String.fmt(
         'Cannot define "%@.%@" more than once. Please use calls count constraint instead (once, twice, exactly, ...)',
         this.get('alias'), method));
     }
-
-    var calls = this.get('calls'),
-        expectations = this.get('expectations');
 
     var expectation = CallExpectation.create({
       method: method
     });
     expectations.pushObject(expectation);
 
+    if (this[method]) {
+      this._original[method] = this[method];
+    }
     this[method] = function () {
       calls.addCall(method, Array.prototype.slice.call(arguments));
       return expectation.get('returnValue');
