@@ -1,6 +1,6 @@
 {
   "name": "ember-qunit-mock",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Basic mocking tools with smooth integration in ember-qunit tests.",
   "author": "Mike Aski <mike.aski@gmail.com>",
   "repository": {
