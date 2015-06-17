@@ -80,9 +80,9 @@ test('mock validation check arguments', function (assert) {
 
   assert.deepEqual(fakeAsserter.calls, [
     ['equal', 1, 1, 'Mock <anonymous> expected 1 call for "bam", got 1'],
-    ['deepEqual', 42, 36, '[<anonymous>.bam - call #1] expected call(42, ...)'],
-    ['deepEqual', "hop", "paf", '[<anonymous>.bam - call #1] expected call(..., hop, ...)'],
-    ['deepEqual', {"k":"v"}, undefined, '[<anonymous>.bam - call #1] expected call(..., {k: v})']
+    ['deepEqual', 36, 42, '[<anonymous>.bam - call #1] expected call(42, ...)'],
+    ['deepEqual', "paf", "hop", '[<anonymous>.bam - call #1] expected call(..., hop, ...)'],
+    ['deepEqual', undefined, {"k":"v"}, '[<anonymous>.bam - call #1] expected call(..., {k: v})']
   ], 'Assertions are as expected');
 });
 

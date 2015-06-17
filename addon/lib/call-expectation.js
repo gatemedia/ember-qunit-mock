@@ -98,7 +98,7 @@ export default Ember.Object.extend({
         if (arg !== ANYTHING) {
           var prefix = (i === 0 ? '' : '..., '),
               suffix = (i === args.length - 1 ? '' : ', ...');
-          assert.deepEqual(arg, callArgs[i],
+          assert.deepEqual(callArgs[i], arg,
             Ember.String.fmt('[%@.%@ - call #%@] expected call(%@%@%@)', alias, expectedMethod, index + 1, prefix, arg, suffix));
         }
       });
