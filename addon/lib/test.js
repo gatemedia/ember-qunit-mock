@@ -26,4 +26,6 @@ export function test (testName, callback, wrapped) {
   (wrapped || qunitTest)(testName, wrapper);
 }
 
+export var ANYTHING = '<<mock-arg:anything>>';
+
 export default test;

@@ -1,10 +1,11 @@
 import { module, test } from 'qunit';
 import Mock from 'ember-qunit-mock/lib/mock';
+import { ANYTHING } from 'ember-qunit-mock/lib/test';
 
 module('Mock');
 
 test('cannot define method more than once', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -19,7 +20,7 @@ test('cannot define method more than once', function (assert) {
 
 
 test('support redefinition of Ember.Object methods', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -30,7 +31,7 @@ test('support redefinition of Ember.Object methods', function (assert) {
 
 
 test('support multiple calls with single default return value', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -43,7 +44,7 @@ test('support multiple calls with single default return value', function (assert
 
 
 test('support multiple calls with constrainted args (last constraint lasts)', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -59,7 +60,7 @@ test('support multiple calls with constrainted args (last constraint lasts)', fu
 
 
 test('support multiple calls with constrainted results (last result lasts)', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -75,7 +76,7 @@ test('support multiple calls with constrainted results (last result lasts)', fun
 
 
 test('support multiple calls with both constrainted args & results (last args & result lasts)', function (assert) {
-  var mock = Mock.create({
+  let mock = Mock.create({
     name: 'Stuff'
   });
 
@@ -90,5 +91,30 @@ test('support multiple calls with both constrainted args & results (last args & 
   assert.equal(mock.process('b'), 36, 'Second call returned expected value');
   assert.equal(mock.process('b'), 81, 'Third call returned expected value');
   assert.equal(mock.process('b'), 81, 'Fourth call returned expected value');
+  mock.validate(assert);
+});
+
+
+test('support ANYTHING argument', function (assert) {
+  let mock = Mock.create({
+    name: 'Stuff'
+  });
+
+  mock.expect('process')
+    .withArgs(ANYTHING)
+    .withArgs(ANYTHING)
+    .withArgs(42, ANYTHING)
+    .withArgs(42, ANYTHING)
+    .withArgs(ANYTHING, 42)
+    .withArgs(42, ANYTHING, 42)
+    .exactly(6);
+
+  mock.process();
+  mock.process(0);
+  mock.process(42);
+  mock.process(42, 1);
+  mock.process(3, 42);
+  mock.process(42, 4, 42);
+
   mock.validate(assert);
 });

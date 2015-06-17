@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { ANYTHING } from './test';
 
 function repr (stuff) {
   switch (Ember.typeOf(stuff)) {
@@ -94,10 +95,12 @@ export default Ember.Object.extend({
       var callArgs = methodCalls[index].args;
 
       args.forEach(function (arg, i) {
-        var prefix = (i === 0 ? '' : '..., '),
-            suffix = (i === args.length - 1 ? '' : ', ...');
-        assert.deepEqual(arg, callArgs[i],
-          Ember.String.fmt('[%@.%@ - call #%@] expected call(%@%@%@)', alias, expectedMethod, index + 1, prefix, arg, suffix));
+        if (arg !== ANYTHING) {
+          var prefix = (i === 0 ? '' : '..., '),
+              suffix = (i === args.length - 1 ? '' : ', ...');
+          assert.deepEqual(arg, callArgs[i],
+            Ember.String.fmt('[%@.%@ - call #%@] expected call(%@%@%@)', alias, expectedMethod, index + 1, prefix, arg, suffix));
+        }
       });
     });
   },
