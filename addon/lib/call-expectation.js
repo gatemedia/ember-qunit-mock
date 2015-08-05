@@ -4,7 +4,7 @@ import { ANYTHING } from './test';
 function repr (stuff) {
   switch (Ember.typeOf(stuff)) {
   case 'object':
-    return Ember.String.fmt('{%@}', Ember.keys(stuff).map(function (key) {
+    return Ember.String.fmt('{%@}', Object.keys(stuff).map(function (key) {
       return Ember.String.fmt("%@:%@", key, repr(stuff[key]));
     }).join(', '));
   case 'array':

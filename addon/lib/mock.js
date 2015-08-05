@@ -63,7 +63,7 @@ export default Ember.Object.extend({
   },
 
   _restoreOriginals: function () {
-    Ember.keys(this._original).forEach(function (method) {
+    Object.keys(this._original).forEach(function (method) {
       this[method] = this._original[method];
     }, this);
   },
